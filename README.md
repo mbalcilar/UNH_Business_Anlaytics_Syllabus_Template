@@ -1,7 +1,7 @@
 # University of New Haven Department of Economics and Business Anlaytics SyllabusTemplate
 
 Author: [Mehmet Balcilar](www.mbalcilar.net) <br/>
-Email: [mbalcilar@newhaven.edu](mailto:mbalcilar@newhaven.edu?subject=UNH Syllabus Templat)
+Email: mbalcilar@newhaven.edu
 
 R Markdown Template for University of New Haven, Department of Economics and Business Analytics.
 
