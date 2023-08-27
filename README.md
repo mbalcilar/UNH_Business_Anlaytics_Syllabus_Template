@@ -1,4 +1,4 @@
-# University of New Haven Department of Economics and Business Anlaytics SyllabusTemplate
+# University of New Haven <br> Department of Economics and Business Anlaytics <br>. SyllabusTemplate
 
 Author: [Mehmet Balcilar](www.mbalcilar.net) <br/>
 Email: mbalcilar@newhaven.edu
