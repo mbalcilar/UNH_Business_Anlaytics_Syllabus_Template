@@ -22,7 +22,7 @@ instructor:
   email: MBalcilar@newhaven.edu
   telephone: (203) 479-4779 
   office: Orange Campus N125
-  officehours: 1:00-3:00 p.m. MTuTh
+  officehours: W 09:00 am -11:00 am
   web: www.mbalcilar.net
  
 # You can include multiple entries for a teaching assistant by filling in all these options below. Currently this is set to populate two columns on the syllabus but there is not an even column break inserted.
@@ -44,8 +44,8 @@ chair_office: Orange Campus N132A
 coursename: 'BANL 6100-08 -- Business Analytics'
 semester: 'Fall 2023'
 credits: '3 credits'
-classroom: 'CRN 91887'
-classhours: 11:15 am - 12:05 pm	MW
+classroom: 'BCST 307'
+classhours: W 12:30 pm - 3:15 pm
 
 # running head for each page
 runhead: 'Pompeo College of Business -- BANL 6100'
@@ -67,7 +67,7 @@ header-includes:
 ---
 
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, error=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 library(timeDate)
 library(tibble)
@@ -86,21 +86,37 @@ Days <- c("Wednesday")
 SemesterStart <- as.Date("2023/8/28")
 
 #Semester end date for classes as YYYY/M/D.
-SemesterEnd <- as.Date("2023/12/11")
+SemesterEnd <- as.Date("2023/12/20")
 
 #Fall break start and stop date.
 FallBreak <-
   seq.Date(
-    from = as.Date("2021/10/7"),
-    to = as.Date("2021/10/10"),
+    from = as.Date("2023/10/22"),
+    to = as.Date("2023/10/24"),
     by = "day"
   )
 
 #Spring break start and stop date.
 SpringBreak <-
   seq.Date(
-    from = as.Date("2022/02/28"),
-    to = as.Date("2022/03/06"),
+    from = as.Date("2024/03/09"),
+    to = as.Date("2024/03/17"),
+    by = "day"
+  )
+
+#Fall reading days start and stop date.
+FallReading <-
+  seq.Date(
+    from = as.Date("2023/12/12"),
+    to = as.Date("2023/12/13"),
+    by = "day"
+  )
+
+#Spring reading days start and stop date.
+SpringReading <-
+  seq.Date(
+    from = as.Date("2024/04/30"),
+    to = as.Date("2024/04/30"),
     by = "day"
   )
 
@@ -110,15 +126,15 @@ SemesterDays <-
 
 #Add day before Thanksgiving.
 DayBeforeThnks<-as.Date(holiday(
-    year = getRmetricsOptions("currentYear"),
-    Holiday = c("USThanksgivingDay")))-1
+  year = getRmetricsOptions("currentYear"),
+  Holiday = c("USThanksgivingDay")))-1
 
 #Full list of holidays that there are no classes including breaks.
 Holidays <-
   c(as.Date(holiday(
     year = getRmetricsOptions("currentYear"),
     Holiday = c("USLaborDay", "USThanksgivingDay", "USMLKingsBirthday")
-  )), SpringBreak, FallBreak, DayBeforeThnks)
+  )), SpringBreak, FallBreak, FallReading, SpringReading, DayBeforeThnks)
 
 #Create a list of semester days excluding holidays.
 SemesterDays <- SemesterDays[!SemesterDays %in% Holidays]
@@ -143,9 +159,23 @@ MeetingDays$Week <- Week
 MeetingDays$Class <- 1:nrow(MeetingDays)
 
 #Replace this with c("Lecture topic 1",...,"Lecture topic N") to fill in table.
+#Lecture_Topic <- 1:nrow(MeetingDays)
+# Make sure number elments here is equal to number of MeetingDays, i.e. nrow(MeetingDays)
+Lecture_Topic <- c(
+  "Module 1",
+  rep("Module 2",2),
+  rep("Module 3",3),
+  "Module 4",
+  "Midterm Exam",
+  rep("Module 4",2),
+  rep("Module 5",3),
+  rep("Module 6",1),
+  "Final Exam"
+)
 
-Lecture_Topic <- 1:nrow(MeetingDays)
-
+#check for incorrect number of topics
+if (length(Lecture_Topic) != nrow(MeetingDays)) 
+  stop("Number of lecture topics is not equal to number of Class Meetings")
 
 MeetingDays <- bind_cols(MeetingDays, Lecture = Lecture_Topic)
 
@@ -178,16 +208,12 @@ Grades <- tribble( ~ "Letter Grade",
 Weights <- tribble(
                     ~ Item,
                     ~ Weight,
-                    "Writing scaffolding",
-                    "20 %",
-                    "Semester Project",
+                    "Homework",
                     "25 %",
-                    "Labratory Assignments",
-                    "20 %",
                     "Midterm Exam",
-                    "15 %",
+                    "35 %",
                     "Final Exam",
-                    "20 %"
+                    "40 %"
                   )
 
 
@@ -209,32 +235,32 @@ New and used hard copies of the book can be purchased at [Amazon](https://www.am
 
 # Required Software
 
-All students are rewuired to use [**R**](https://www.r-project.org) and [**RStudio**](https://posit.co/products/open-source/rstudio/), a no-cost add-on coding environment for R provided by [**Posit**](https://posit.co). R serves as a statistical programming language, while R Studio operates as a third-party software user interface designed for R. These tools will find application in nearly all course assignments. R is available under the GNP General Public License, compatible with various operating systems, including Windows and Mac OS. Similarly, RStudio can be downloaded free of charge. The computer lab has already installed both R and R-Studio. You have the option to download them onto your personal computer as outlined below:
+All students are required to use [**R**](https://www.r-project.org) and [**RStudio**](https://posit.co/products/open-source/rstudio/), a no-cost add-on coding environment for `R` provided by [**Posit**](https://posit.co). `R` serves as a statistical programming language, while `RStudio` operates as a third-party software user interface designed for `R`. These tools will find application in nearly all course assignments. `R` is available under the GNP General Public License, compatible with various operating systems, including `Windows` and `Mac OS`. Similarly, `RStudio` can be downloaded free of charge. The computer lab has already installed both `R` and `RStudio`. You have the option to download them onto your personal computer as outlined below:
 
 \begin{itemize}
 \item[] \textbf{R:} \href{https://cran.r-project.org}{https://cran.r-project.org}
 \item[] \textbf{R-Studio:} \href{https://posit.co/download/rstudio-desktop/}{https://posit.co/download/rstudio-desktop}
 \end{itemize}
 
-Posit web page for RStudio will suggest the appropriate version for your operating system.
-Furthermore, the College of Business has acquired a license to locally operate the RStudio server at the University of New Haven. This server is accessible at
+Posit web page for `RStudio` will suggest the appropriate version for your operating system.
+Furthermore, the College of Business has acquired a license to locally operate the `RStudio` server at the University of New Haven. This server is accessible at
 
 \begin{center}
 {\bfseries \href{rstudio.newhaven.edu:8787}{rstudio.newhaven.edu:8787} }
 \end{center}
 
-Additionally, it serves as a safeguard, ensuring that all R scripts are preserved in the event that any files are inadvertently lost within your desktop directories. You will be provide with your ID and password during the first week of the class. Using the online server presents a viable alternative in case you encounter technical difficulties with R on your personal computer. The RStdio Server offers enhanced convenience, allowing access to R from home, the classroom, or the library using any browser, computer, or tablet. Moreover, it facilitates the centralization of all your coursework in one location.
+Additionally, it serves as a safeguard, ensuring that all `R` scripts are preserved in the event that any files are inadvertently lost within your desktop directories. You will be provide with your ID and password during the first week of the class. Using the online server presents a viable alternative in case you encounter technical difficulties with R on your personal computer. The `RStudio Server` offers enhanced convenience, allowing access to `R` from home, the classroom, or the library using any browser, computer, or tablet. Moreover, it facilitates the centralization of all your coursework in one location.
 
-Posit also offers a free cloud bases RStudio server. For more information, please refer to: [https://posit.cloud/plans/free](https://posit.cloud/plans/free).
+Posit also offers a free cloud bases `RStudio Server`. For more information, please refer to: [https://posit.cloud/plans/free](https://posit.cloud/plans/free).
 
 # Additional Resources
 
-- You can follow the steps at [Posit](https://posit.co/download/rstudio-desktop/) to install R and RStuio on your computer.
-- [LinkedIn Learning](https://technology.newhaven.edu/linkedin-learning/), provided by the University of New Haven provides University faculty, staff, and students with free access to thousands of top-quality video tutorials. You can access [New Haven
+- You can follow the steps at [Posit](https://posit.co/download/rstudio-desktop/) to install `R` and `RStudio` on your computer.
+- [LinkedIn Learning](https://technology.newhaven.edu/linkedin-learning/), provided by the University of New Haven offer University faculty, staff, and students with free access to thousands of top-quality video tutorials. You can access [New Haven
 LinkedIn](https://technology.newhaven.edu/linkedin-learning/) [here](https://technology.newhaven.edu/linkedin-learning/). One of the courses you may helpful is [Getting Started with R for Data Science](https://www.linkedin.com/learning/paths/getting-started-with-r-for-data-science?u=2359714), which is available [here](https://www.linkedin.com/learning/paths/getting-started-with-r-for-data-science?u=2359714)
 - Youtube videos, such as MarinStatsLectures channel: [https://www.youtube.com/channel/UCaNIxVagLhqupvUiDK01Mgg](https://www.youtube.com/channel/UCaNIxVagLhqupvUiDK01Mgg)
-- [R-Bloggers](https://www.r-bloggers.com) is web site to keep up-to-date with R and analytics: [https://www.r-bloggers.com](https://www.r-bloggers.com).
-- [Stack Overflow](https://stackoverflow.com/questions) is public platform serving 100 million people every month about technical questions and solutions suggested by users. An answer to a question you have is. very likely to exists here or you can ask your question id not already found.
+- [R-Bloggers](https://www.r-bloggers.com) is web site to keep up-to-date with `R` and analytics: [https://www.r-bloggers.com](https://www.r-bloggers.com).
+- [Stack Overflow](https://stackoverflow.com/questions) is a public platform serving 100 million people every month about technical questions and solutions suggested by users. An answer to any questions you may have is highly likely to already exist here. However, if you do not find your question already addressed, you are welcome to pose your inquiry for further assistance.
 
 # Course Goals
 
@@ -255,7 +281,6 @@ At the end of this course, students should be able to:
 
 
 # Course Requirements & Assessment
-Describe course assignments and assessment and where/when/if a camera will be required for each assignment and assessment.
 
 ## Expectations
 
@@ -283,11 +308,55 @@ All students will have periodic opportunities for extra credit throughout the se
 
 You are expected to participate in all class activities, and you should be prepared to contribute to the discussions and class work. This class moves at a demanding pace and requires consistent attendance to be successful. Attendance will be taken but will not be graded. It is recognized that absences may be unavoidable due to illness or family emergency. In this event, students are expected to keep up with their readings and assignments. Absences for more than two (2) weeks is detrimental to a student’s ability to keep up with the course work. In this event, the instructor’s permission is required for satisfactory completion of the course. Whether excused or not, excessive absences may result in a failing grade since these signify a failure to fulfill course requirements. Attendance will be recorded via the Qwickly Attendance application that is embedded in Canvas. Students will receive a pin code to record their attendance. If a student fails to log their attendance in Qwickly, then it is their responsibility to get with the instructor within 48 hours of the class to correct the attendance reporting issue.
 
+# Office Hours Policy
+
+Students have the option to either attend the designated office hours in person or initiate contact via email in order to schedule a Zoom meeting appointment. In cases where circumstances prevent direct communication with the instructor during the designated office hours, students are encouraged to arrange a mutually convenient appointment time that accommodates both the instructor and the student.  
 
 # Course Outline/Schedule
 
 ## Topics
 
+**Module 1 – Introduction to Business Analytics** 
+
+  - Course Syllabus, Overview, Logistics
+  - Data, Information, Knowledge, and Wisdom (DIKW)
+  - `R` and `Rstudio` overview, walk through the basics
+  - Basic `MS Excel` functions
+  - Analyzing public companies with 10-K’s and Proxies
+  - Accessing 10-Ks via `SEC.gov` and `EDGA`R
+  
+**Module 2 – Advanced Excel Functions and Business Analysis**
+
+  - Pivot tables and complex `Excel` functions
+  - Understanding the Business via financial statements, calculating growth rates and margins
+  - Qualitative analysis based on 10-K’s and Proxies
+  - Overview of the role of Statistics in Business, use case of simple linear regression model
+  
+**Module 3 – Data Transformation and Visualization in R**
+
+  - Data transformation and editing with `dplyr`
+  - Visualization with `ggplot2`
+  - Preparing datasets for the regression model
+
+**Module 4 – Basic Statistical Theory, Concepts and Metrics/Introduction to Statistics with R**
+
+  - Mean, Median, Mode, Variance, Covariance, Standard Deviation and Correlation; Difference between correlation and regression
+ - Skewness, how to calculate and visualize in `R`
+ - Confidence intervals and _t_-test in `R` with use cases
+
+**Module 5 – Hypothesis Testing & Regression Analysis**
+
+  - Null and alternative hypothesis, one and two tailed tests
+  - Dependent and independent variables, practicing with creating `SLR`
+  - Create a linear regression model in `R` with use cases
+  - Analyze the results of `SLR` and `MLR` based on the output from `R`
+  - Chi-square test and `ANOVA`
+
+**Module 6 – Data Transformation in R for Data Issues**
+
+  - Heteroscedasticity problem; understanding the concept of heteroscedasticity
+  - Using `log` to transform the data
+  - Assessing the impact of data transformation on the regression model in `R`
 
 
 ## Course Schedule
