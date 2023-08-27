@@ -34,8 +34,9 @@ $endif$
 \titleformat*{\section}{\Large\bfseries\color{unhtext}}
 \titleformat*{\subsection}{\large\bfseries\color{unhtext}}
 
+
 \usepackage{titling}
-\pretitle{\begin{center} \includegraphics[height=2cm]{logo5.png}\LARGE\\}
+\pretitle{\begin{center} \includegraphics[height=2cm]{images/logo5.png}\LARGE\\}
 \posttitle{\end{center}}
 \setlength{\droptitle}{-.15cm}
 
@@ -166,6 +167,7 @@ $if(subtitle)$
 \makeatother
 \subtitle{\textcolor{unhtext}{$subtitle$}}
 $endif$
+
 $if(date)$
 \date{\textcolor{unhtext}{$date$}}
 $else$
@@ -187,8 +189,8 @@ $endif$
 
 %	\thispagestyle{empty}
 
-
-\noindent\Large{\textbf{Course information}}\vspace{3pt}\\
+\vspace{-12pt}
+\noindent\Large{\textbf{\textcolor{unhtext}{Course information}}}\vspace{3pt}\\
   Course: $coursename$\\
   Credid hours: $credits$\\
   Semester: $semester$\\
@@ -196,7 +198,7 @@ $endif$
   Class Hours: $classhours$
 
 \vspace{10pt}
-\noindent\textbf{\Large{Faculty Contact Information}}
+\noindent\textbf{\Large{\textcolor{unhtext}{Faculty Contact Information}}}
 \vspace{-8pt}
 \begin{multicols}{2}
 $for(instructor)$
@@ -220,8 +222,17 @@ $for(instructor)$
   $endfor$
 \end{multicols}
  
- \vspace{-24pt} 	
-\noindent\textbf{\Large{Department Chair:}} \textbf{$chair_name$}, $chair_email$\\
+ \vspace{-20pt}
+
+\noindent\textbf{\Large{\textcolor{unhtext}{Department Chair Contact Information}}}\\
+\vspace{-26pt}
+ \begin{multicols}{2}
+\noindent{$chair_name$}\\
+  E: $chair_email$\\
+  \vfill\columnbreak
+  T: $chair_telephone$\\
+  Office: $chair_office$\\
+\end{multicols}
 
 $if(teachingassistant)$
 \noindent\textbf{\underline{Teaching Assistant}}
